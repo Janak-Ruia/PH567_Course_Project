@@ -1,10 +1,9 @@
-#page 174 abbot. issue- fixed points for V.m.n.h.. graphs are sufficiently good
-#v vs t fp is -54.3 summat
 
 import numpy as np
 from tqdm import tqdm
 from pylab import plot, show, xlabel, ylabel, legend, title
 import math
+
 #modifying functions
 def alpha_n(V):
 	return 0.01*(V-10)/(1-math.exp(-(V-10)/10.0))
@@ -38,28 +37,32 @@ def del_h(ah, bh, h):
 
 #constants
 Cm = 1.0 #nF for 0.1 mm^2
-gNa = 1.2 #0.4 #mS/mm^2
-gK = 0.36 #0.35 #mS/mm^2
-gL = 0.003 #0.0003 #mS/mm^2
-Vk = -77.0 #-0.077 #mV
-VNa = 50.0 #0.05 #mV
-VL = -54.387 #-0.065 #mV
+gNa = 1.2 #mS/mm^2
+gK = 0.36 #mS/mm^2
+gL = 0.003 #mS/mm^2
+Vk = -77.0 #mV
+VNa = 50.0 #mV
+VL = -54.387 #mV
 
+#initial conditions
 m0 = 0.0
 h0 = 1.0
 n0 = 0.0
 I = 100.0
 V0 = -60.0 #V initial equi potential
 
+#Calculating current
 def del_Ik(n, m, h, V):
 	K = gK*n**4*(V-Vk)
 	Na = gNa*m**3*h*(V-VNa)
 	L = gL*((V-VL))
 	return (K+Na+L)
 
+#Voltage updation
 def del_v(Ik, I):
 	return (I-Ik)/Cm
 
+#Perfrming integration for time = b seconds
 N = 100000
 b = 200
 time = np.linspace(0, b, N)
